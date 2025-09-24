@@ -1,0 +1,39 @@
+CREATE TABLE IF NOT EXISTS writers
+(
+    id        BIGINT PRIMARY KEY,
+    firstName VARCHAR(50) NOT NULL,
+    lastName  VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS posts
+(
+    id       BIGINT PRIMARY KEY,
+    content  VARCHAR(2000),
+    created  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    writerId BIGINT        NOT NULL,
+    FOREIGN KEY (writerId) REFERENCES writers (id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS post_status
+(
+    id     BIGINT PRIMARY KEY,
+    postId     BIGINT NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    FOREIGN KEY (postId) REFERENCES posts (id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS labels
+(
+    id   BIGINT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS posts_labels
+(
+    post_id  BIGINT NOT NULL,
+    label_id BIGINT NOT NULL,
+    PRIMARY KEY (post_id, label_id),
+    FOREIGN KEY (post_id) REFERENCES posts (id) ON DELETE CASCADE,
+    FOREIGN KEY (label_id) REFERENCES labels (id) ON DELETE CASCADE
+);
