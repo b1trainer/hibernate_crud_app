@@ -28,7 +28,7 @@ public class PostEntity {
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "label_id")
     )
-    private List<LabelEntity> labels = new ArrayList<>();
+    private Set<LabelEntity> labels = new HashSet<>();
 
     @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private PostStatusEntity status;
@@ -53,7 +53,7 @@ public class PostEntity {
         this.updated = updated;
     }
 
-    public void setLabels(List<LabelEntity> labels) {
+    public void setLabels(Set<LabelEntity> labels) {
         this.labels = labels;
     }
 
@@ -77,7 +77,7 @@ public class PostEntity {
         return updated;
     }
 
-    public List<LabelEntity> getLabels() {
+    public Set<LabelEntity> getLabels() {
         return labels;
     }
 
